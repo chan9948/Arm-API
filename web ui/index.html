@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <label for="">arm id:</label>
+    <input id="input" type="text">
+    <button id="btn">move</button>
+    <h1 id="msgDiv"></h1>
+
+    <script>
+        let input = document.querySelector("#input");
+        let btn = document.querySelector("#btn");
+        let msgDiv = document.querySelector("#msgDiv");
+
+        url = "http://localhost:3000";
+
+        btn.addEventListener("click", () => {
+            let id = input.value;
+
+            fetch(url + "/call/" + id)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (myJson) {
+                    console.log(myJson);
+                });
+        });
+    </script>
+</body>
+
+</html>
