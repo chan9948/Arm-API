@@ -39,6 +39,8 @@
         let armBtn = document.querySelector("#armBtn");
         let armMsg = document.querySelector("#armMsg");
 
+        let debugTable = document.querySelector("#debugTable");
+
         url = "https://ctc-arm-api.herokuapp.com";
         // url = "http://localhost:3000"
 
@@ -51,7 +53,9 @@
                     return response.json();
                 })
                 .then(function (myJson) {
+                    callerMsg.innerHTML = myJson;
                     console.log(myJson);
+                    debug();
                 });
         });
 
@@ -64,10 +68,21 @@
                     return response.json();
                 })
                 .then(function (myJson) {
+                    armMsg.innerHTML = myJson;
                     console.log(myJson);
+                    debug();
                 });
         });
 
+        //debug
+        fetch(url + "/debug")
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (myJson) {
+                    armMsg.innerHTML = myJson;
+                    console.log(myJson);
+                });
     </script>
 </body>
 

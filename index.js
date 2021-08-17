@@ -101,13 +101,15 @@ app.get('/check/:id', (req, res) => {
 })
 
 app.get('/debug', (req, res) => {
-    let text = "";
+    // let text = "";
 
-    arms.forEach(arm => {
-        text += arm.id + " : " + arm.status + "\n";
-    });
+    // arms.forEach(arm => {
+    //     text += arm.id + " : " + arm.status + "\n";
+    // });
 
-    res.send(text + "\n end");
+    // res.send(text + "\n end");
+
+    res.send(arms);
 })
 
 app.get('/' , (req , res)=>{
