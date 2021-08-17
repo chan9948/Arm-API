@@ -28,19 +28,19 @@ app.get('/call/:id', (req, res) => {
         switch (targetArm.status) {
             case "idling": {
                 targetArm.status = "move";
-                res.send(`called arm to move`);
+                res.send({"msg": `called arm to move`});
             };
                 break;
             case "move": {
-                res.send(`waiting arm to be moving`);
+                res.send({"msg": `waiting arm to be moving`});
             };
                 break;
             case "moving": {
-                res.send(`arm is still moving`);
+                res.send({"msg": `arm is still moving`});
             };
                 break;
             default: {
-                res.send(`error call`);
+                res.send({"msg": `error call`});
             }
         }
     } else {
@@ -78,17 +78,17 @@ app.get('/check/:id', (req, res) => {
         // }
         switch (targetArm.status) {
             case "idling": {
-                res.send(`idle`);
+                res.send({"msg": "idle"});
             };
                 break;
             case "move": {
                 targetArm.status = "moving";
-                res.send(`move`);
+                res.send({"msg": "move"});
             };
                 break;
             case "moving": {
                 targetArm.status = "idling";
-                res.send(`idle`);
+                res.send({"msg": "idle"});
             };
                 break;
             default: {

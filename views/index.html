@@ -27,14 +27,14 @@
 
     <h1>DEBUG</h1>
     <ul id="debugTable">
-        
+
     </ul>
 
     <script>
         let callerInput = document.querySelector("#callerInput");
         let callerBtn = document.querySelector("#callerBtn");
         let callerMsg = document.querySelector("#callerMsg");
-        
+
         let armInput = document.querySelector("#armInput");
         let armBtn = document.querySelector("#armBtn");
         let armMsg = document.querySelector("#armMsg");
@@ -43,6 +43,9 @@
 
         url = "https://ctc-arm-api.herokuapp.com";
         // url = "http://localhost:3000"
+
+        //init
+        debug();
 
         //caller
         callerBtn.addEventListener("click", () => {
@@ -53,7 +56,7 @@
                     return response.json();
                 })
                 .then(function (myJson) {
-                    callerMsg.innerHTML = myJson;
+                    callerMsg.innerHTML = myJson.msg;
                     console.log(myJson);
                     debug();
                 });
@@ -68,21 +71,26 @@
                     return response.json();
                 })
                 .then(function (myJson) {
-                    armMsg.innerHTML = myJson;
+                    armMsg.innerHTML = myJson.msg;
                     console.log(myJson);
                     debug();
                 });
         });
 
         //debug
-        fetch(url + "/debug")
+        let debug = () => {
+            debugTable.innerHTML = "";
+            
+            fetch(url + "/debug")
                 .then(function (response) {
                     return response.json();
                 })
                 .then(function (myJson) {
                     armMsg.innerHTML = myJson;
-                    console.log(myJson);
+                    console.log(myJson.arms);
                 });
+        }
+
     </script>
 </body>
 
