@@ -80,13 +80,13 @@
         //debug
         let debug = () => {
             debugTable.innerHTML = "";
-            
+
             fetch(url + "/debug")
                 .then(function (response) {
                     return response.json();
                 })
                 .then(function (myJson) {
-                    armMsg.innerHTML = myJson;
+                    armMsg.innerHTML = myJson + "testing";
                     console.log(myJson.arms);
                 });
         }
