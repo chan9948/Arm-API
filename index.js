@@ -17,20 +17,38 @@ app.get('/call/:id', (req, res) => {
     });
 
     if (isArmExists) {
-        if (targetArm.status == "idle") {
-            targetArm.status = "move";
-            res.send(`called arm with id ${req.params.id}`);
-        } else {
-            res.send(`arm with id ${req.params.id} is busy`);
+        // if (targetArm.status == "idle") {
+        //     targetArm.status = "move";
+        //     res.send(`called arm with id ${req.params.id}`);
+        // } else {
+        //     res.send(`arm with id ${req.params.id} is busy`);
+        // }
+        switch (targetArm.status) {
+            case "idling": {
+                targetArm.status = "move";
+                res.send(`called arm to move`);
+            };
+                break;
+            case "move": {
+                res.send(`waiting arm to be moving`);
+            };
+                break;
+            case "moving": {
+                res.send(`arm is still moving`);
+            };
+                break;
+            default: {
+                res.send(`error call`);
+            }
         }
     } else {
-        let newArm = {"id": req.params.id, "status": "move"};
+        let newArm = { "id": req.params.id, "status": "move" };
         arms.push(newArm);
         res.send(`pushed and called new arm with id ${req.params.id}`);
     }
 })
 
-app.get('/check/:id' , (req , res)=>{
+app.get('/check/:id', (req, res) => {
     let isArmExists = false;
     let targetArm;
 
@@ -41,46 +59,46 @@ app.get('/check/:id' , (req , res)=>{
         }
     });
 
-    if(isArmExists) {
-        if(targetArm.status == "move"){
-            targetArm.status = "moving";
-            res.send("move");
-        }
-        if(targetArm.status == "idle") {
-            res.send("idle");
-        }
-        if (true) {
-            res.send("error");
+    if (isArmExists) {
+        // if(targetArm.status == "move"){
+        //     targetArm.status = "moving";
+        //     res.send("move");
+        // }
+        // if(targetArm.status == "moving"){
+        //     targetArm.status = "moving";
+        //     res.send("move");
+        // }
+        // if(targetArm.status == "idle") {
+        //     res.send("idle");
+        // }
+        // if (true) {
+        //     res.send("error");
+        // }
+        switch (targetArm.status) {
+            case "idling": {
+                res.send(`idle`);
+            };
+                break;
+            case "move": {
+                targetArm.status = "moving";
+                res.send(`move`);
+            };
+                break;
+            case "moving": {
+                targetArm.status = "idling";
+                res.send(`idle`);
+            };
+                break;
+            default: {
+                res.send(`error check`);
+            }
         }
     } else {
         res.send("no such arm");
     }
 })
 
-app.get('/moved/:id' , (req , res)=>{
-    let isArmExists = false;
-    let targetArm;
-
-    arms.forEach(arm => {
-        if (arm.id == req.params.id) {
-            isArmExists = true;
-            targetArm = arm
-        }
-    });
-
-    if(isArmExists) {
-        if(targetArm.status == "moving"){
-            targetArm.status = "idle";
-            res.send("ok");
-        }else {
-            res.send("error");
-        }
-    } else {
-        res.send("no such arm");
-    }
-})
-
-app.get('/debug' , (req , res)=>{
+app.get('/debug', (req, res) => {
     let text = "";
 
     arms.forEach(arm => {
@@ -88,6 +106,10 @@ app.get('/debug' , (req , res)=>{
     });
 
     res.send(text + "\n end");
+})
+
+app.get('/' , (req , res)=>{
+    res.sendFile(path.join(__dirname, '/web ui/index.html'));
 })
 
 app.listen(process.env.PORT || port, () => {

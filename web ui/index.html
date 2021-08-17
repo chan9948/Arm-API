@@ -9,20 +9,42 @@
 </head>
 
 <body>
+    <h1>Caller</h1>
     <label for="">arm id:</label>
-    <input id="input" type="text">
-    <button id="btn">move</button>
-    <h1 id="msgDiv"></h1>
+    <input id="callerInput" type="text">
+    <button id="callerBtn">move</button>
+    <h3 id="callerMsg"></h3>
+
+    <hr>
+
+    <h1>Arm</h1>
+    <label for="">arm id:</label>
+    <input id="armInput" type="text">
+    <button id="armBtn">move</button>
+    <h3 id="armMsg"></h3>
+
+    <hr>
+
+    <h1>DEBUG</h1>
+    <ul id="debugTable">
+        
+    </ul>
 
     <script>
-        let input = document.querySelector("#input");
-        let btn = document.querySelector("#btn");
-        let msgDiv = document.querySelector("#msgDiv");
+        let callerInput = document.querySelector("#callerInput");
+        let callerBtn = document.querySelector("#callerBtn");
+        let callerMsg = document.querySelector("#callerMsg");
+        
+        let armInput = document.querySelector("#armInput");
+        let armBtn = document.querySelector("#armBtn");
+        let armMsg = document.querySelector("#armMsg");
 
-        url = "http://localhost:3000";
+        url = "https://ctc-arm-api.herokuapp.com";
+        // url = "http://localhost:3000"
 
-        btn.addEventListener("click", () => {
-            let id = input.value;
+        //caller
+        callerBtn.addEventListener("click", () => {
+            let id = callerInput.value;
 
             fetch(url + "/call/" + id)
                 .then(function (response) {
@@ -32,6 +54,20 @@
                     console.log(myJson);
                 });
         });
+
+        //arm
+        callerBtn.addEventListener("click", () => {
+            let id = callerInput.value;
+
+            fetch(url + "/check/" + id)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (myJson) {
+                    console.log(myJson);
+                });
+        });
+
     </script>
 </body>
 
