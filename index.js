@@ -5,6 +5,8 @@ const port = 3000;
 
 let arms = [];
 
+app.use('/public', express.static(process.cwd() + '/public'));
+
 app.get('/call/:id', (req, res) => {
     let isArmExists = false;
     let targetArm;
@@ -109,7 +111,7 @@ app.get('/debug', (req, res) => {
 })
 
 app.get('/' , (req , res)=>{
-    res.sendFile(path.join(__dirname, '/web ui/index.html'));
+    res.sendFile(process.cwd() + '/views/index.html');
 })
 
 app.listen(process.env.PORT || port, () => {
